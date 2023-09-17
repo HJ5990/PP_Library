@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>properties test</comment>
+
+<entry key="memberLogin">
+SELECT M_NO
+FROM MEMBER
+WHERE M_ID = ? AND M_PWD = ?</entry>
+
+<entry key="adminLogin">
+SELECT A_NO
+FROM ADMIN
+WHERE A_ID = ? AND A_PWD = ?</entry>
+
+<entry key="showCategory">
+SELECT *
+FROM CATEGORY</entry>
+
+<entry key="driver">oracle.jdbc.driver.OracleDriver</entry>
+<entry key="url">jdbc:oracle:thin:@localhost:1521:xe</entry>
+<entry key="username">PP_L</entry>
+</properties>
