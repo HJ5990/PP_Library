@@ -17,6 +17,12 @@ WHERE A_ID = ? AND A_PWD = ?</entry>
 SELECT *
 FROM CATEGORY</entry>
 
+<entry key=showBookList>
+SELECT *
+FROM BOOK
+WHERE C_NO = ?</entry>
+
+
 <entry key="driver">oracle.jdbc.driver.OracleDriver</entry>
 <entry key="url">jdbc:oracle:thin:@localhost:1521:xe</entry>
 <entry key="username">PP_L</entry>

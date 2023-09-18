@@ -2,6 +2,8 @@ package com.kh.controller;
 
 import java.util.ArrayList;
 
+import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
+
 import com.kh.model.service.LibraryService;
 import com.kh.model.vo.Category;
 import com.kh.view.LibraryMenu;
@@ -32,13 +34,19 @@ public class LibraryController {
 	}
 		
 	
-	public void showCategory() {
+	public int showCategory() {
+		int ct = 0;
 		ArrayList<Category> ctList = new LibraryService().showCategory();
 		if (ctList.isEmpty()) {
 			new LibraryMenu().displayFail("데이터가 없습니다");
 		} else {
-			new LibraryMenu().displayctList(ctList);
+			ct = new LibraryMenu().displayctList(ctList);
 		}
+		return ct;
+	}
+	
+	public void showBookList(int ct) {
+		ArratList<Book> bookList = new LibraryService().showBookList(ct);
 	}
 	
 	

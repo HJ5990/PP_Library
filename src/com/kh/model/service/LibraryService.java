@@ -34,6 +34,11 @@ public class LibraryService {
 		return ctList;
 	}
 	
+	public void showBookList(int ct) {
+		Connection conn = JDBCTemplate.getConnection();
+		new LibraryDao().showBookList(conn, ct);
+	}
+	
 	
 	
 	

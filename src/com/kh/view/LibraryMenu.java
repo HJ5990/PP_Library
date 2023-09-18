@@ -97,7 +97,7 @@ public class LibraryMenu {
 			
 			switch(num) {
 				case 1: 
-					rentalBook();
+					int bNo = rentalBook();
 					break;
 				case 2:
 					break;
@@ -121,11 +121,17 @@ public class LibraryMenu {
 	//--------------------------------------------------------------------------------------------------
 	// 1.대여
 	
-	public void rentalBook() {
-		lc.showCategory();
-
+	/** 카테고리 보여주고, 카테고리에 맞는 책 보여준 뒤, 책번호 반환하는 메서드 */
+	public int rentalBook() {
+		int ct = lc.showCategory();
+		if(ct > 0) {
+			lc.showBookList(ct);
+		}
 		
+
 	}
+	
+	
 	
 	
 	
@@ -203,13 +209,16 @@ public class LibraryMenu {
 		System.out.println("\n실패 : " + message);
 	}
 	
-	public void displayctList(ArrayList<Category> ctList) {
+	public int displayctList(ArrayList<Category> ctList) {
 		System.out.println("\n=======[카테고리]=======");
 		for (Category c : ctList) {
 			System.out.println(c);
 		}
 		System.out.println("===================");
-		System.out.println();
+		System.out.print("번호 입력 : ");
+		int ct = sc.nextInt();
+		sc.nextLine();
+		return ct;
 	}
 	
 

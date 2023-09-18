@@ -99,5 +99,11 @@ public class LibraryDao {
 		return ctList;
 	}
 	
+	public void showBookList(Connection conn, int ct) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("showBookList");
+	}
+	
 	
 }
