@@ -2,9 +2,8 @@ package com.kh.controller;
 
 import java.util.ArrayList;
 
-import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
-
 import com.kh.model.service.LibraryService;
+import com.kh.model.vo.Book;
 import com.kh.model.vo.Category;
 import com.kh.view.LibraryMenu;
 
@@ -34,9 +33,9 @@ public class LibraryController {
 	}
 		
 	
-	public int showCategory() {
+	public int selectCategory() {
 		int ct = 0;
-		ArrayList<Category> ctList = new LibraryService().showCategory();
+		ArrayList<Category> ctList = new LibraryService().selectCategory();
 		if (ctList.isEmpty()) {
 			new LibraryMenu().displayFail("데이터가 없습니다");
 		} else {
@@ -45,8 +44,12 @@ public class LibraryController {
 		return ct;
 	}
 	
-	public void showBookList(int ct) {
-		ArratList<Book> bookList = new LibraryService().showBookList(ct);
+	public ArrayList<Book> showBookList(int ct) {
+		ArrayList<Book> bookList = new LibraryService().showBookList(ct);
+		if (bookList.isEmpty()) {
+			new LibraryMenu().displayFail("데이터가 없습니다");
+		} 
+		return bookList;
 	}
 	
 	

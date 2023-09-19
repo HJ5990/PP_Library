@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.kh.common.JDBCTemplate;
+import com.kh.model.vo.Book;
 import com.kh.model.vo.Category;
 
 public class LibraryDao {
@@ -78,12 +79,12 @@ public class LibraryDao {
 		return result;
 	}
 	
-	public ArrayList<Category> showCategory(Connection conn){
+	public ArrayList<Category> selectCategory(Connection conn){
 		// 여러행 => ResultSet객체 > ArrayList객체
 		ArrayList<Category> ctList = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("showCategory");	
+		String sql = prop.getProperty("selectCategory");	
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -95,14 +96,40 @@ public class LibraryDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}	
 		return ctList;
 	}
 	
-	public void showBookList(Connection conn, int ct) {
+	public ArrayList<Book> showBookList(Connection conn, int ct) {
+		ArrayList<Book> bookList = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("showBookList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, ct);
+			
+			while(rset.next()) {
+				Book b = new Book(rset.getInt("B_NO"),
+									rset.getInt("C_NO"),
+									rset.getString("B_NAME"),
+									rset.getString("AUTHOR"),
+									rset.getDate("PUBLISHDATE"),
+									rset.getInt("QUANTITY")
+									);
+				bookList.add(b);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return bookList;		
 	}
 	
 	

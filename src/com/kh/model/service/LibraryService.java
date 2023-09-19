@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.kh.common.JDBCTemplate;
 import com.kh.model.dao.LibraryDao;
+import com.kh.model.vo.Book;
 import com.kh.model.vo.Category;
 
 public class LibraryService {
@@ -27,16 +28,18 @@ public class LibraryService {
 		return result;	
 	}
 	
-	public ArrayList<Category> showCategory() {
+	public ArrayList<Category> selectCategory() {
 		Connection conn = JDBCTemplate.getConnection();
-		ArrayList<Category> ctList = new LibraryDao().showCategory(conn);
+		ArrayList<Category> ctList = new LibraryDao().selectCategory(conn);
 		JDBCTemplate.close(conn);
 		return ctList;
 	}
 	
-	public void showBookList(int ct) {
+	public ArrayList<Book> showBookList(int ct) {
 		Connection conn = JDBCTemplate.getConnection();
-		new LibraryDao().showBookList(conn, ct);
+		ArrayList<Book> bookList = new LibraryDao().showBookList(conn, ct);
+		JDBCTemplate.close(conn);
+		return bookList;
 	}
 	
 	

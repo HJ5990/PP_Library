@@ -13,11 +13,11 @@ SELECT A_NO
 FROM ADMIN
 WHERE A_ID = ? AND A_PWD = ?</entry>
 
-<entry key="showCategory">
+<entry key="selectCategory">
 SELECT *
 FROM CATEGORY</entry>
 
-<entry key=showBookList>
+<entry key="showBookList">
 SELECT *
 FROM BOOK
 WHERE C_NO = ?</entry>

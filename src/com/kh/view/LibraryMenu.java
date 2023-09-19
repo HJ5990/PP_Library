@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.kh.controller.LibraryController;
+import com.kh.model.vo.Book;
 import com.kh.model.vo.Category;
 import com.kh.model.vo.Member;
 
@@ -97,7 +98,7 @@ public class LibraryMenu {
 			
 			switch(num) {
 				case 1: 
-					int bNo = rentalBook();
+					rentalBook();
 					break;
 				case 2:
 					break;
@@ -122,14 +123,31 @@ public class LibraryMenu {
 	// 1.대여
 	
 	/** 카테고리 보여주고, 카테고리에 맞는 책 보여준 뒤, 책번호 반환하는 메서드 */
-	public int rentalBook() {
-		int ct = lc.showCategory();
-		if(ct > 0) {
-			lc.showBookList(ct);
+	public void rentalBook() {
+		int ct = lc.selectCategory();
+		// 선택한 카테고리에 데이터가 없으면 메서드 종료
+		if(ct < 1) {
+			return;
 		}
+		
+		ArrayList<Book> bookList = lc.showBookList(ct);
+		// 해당 책배열에 데이터가 없으면 메서드 종료
+		if (bookList.isEmpty()) {
+			return;
+		}
+		selectBook();
 		
 
 	}
+	
+	
+	
+
+	
+	
+	
+	
+	
 	
 	
 	
@@ -186,12 +204,7 @@ public class LibraryMenu {
 	//--------------------------------------------------------------------------------------------------
 	
 	
-	/**책 목록 조회*/
-	public void bookList() {
-		
-	}
-		
-	
+
 	
 	
 	
