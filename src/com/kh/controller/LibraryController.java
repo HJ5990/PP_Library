@@ -40,16 +40,19 @@ public class LibraryController {
 			new LibraryMenu().displayFail("데이터가 없습니다");
 		} else {
 			ct = new LibraryMenu().displayctList(ctList);
-		}
+		}	
 		return ct;
 	}
 	
-	public ArrayList<Book> showBookList(int ct) {
-		ArrayList<Book> bookList = new LibraryService().showBookList(ct);
+	public int selectBookList(int ct) {
+		ArrayList<Book> bookList = new LibraryService().selectBookList(ct);
+		int bNo = 0;
 		if (bookList.isEmpty()) {
 			new LibraryMenu().displayFail("데이터가 없습니다");
-		} 
-		return bookList;
+		} else {
+			bNo = new LibraryMenu().displayBookList(bookList);
+		}
+		return bNo;
 	}
 	
 	

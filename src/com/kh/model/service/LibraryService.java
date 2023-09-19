@@ -35,9 +35,9 @@ public class LibraryService {
 		return ctList;
 	}
 	
-	public ArrayList<Book> showBookList(int ct) {
+	public ArrayList<Book> selectBookList(int ct) {
 		Connection conn = JDBCTemplate.getConnection();
-		ArrayList<Book> bookList = new LibraryDao().showBookList(conn, ct);
+		ArrayList<Book> bookList = new LibraryDao().selectBookList(conn, ct);
 		JDBCTemplate.close(conn);
 		return bookList;
 	}

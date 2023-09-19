@@ -103,11 +103,12 @@ public class LibraryDao {
 		return ctList;
 	}
 	
-	public ArrayList<Book> showBookList(Connection conn, int ct) {
+	// 카테고리에 맞는 책 + 수량 1개이상인 책 불러옴
+	public ArrayList<Book> selectBookList(Connection conn, int ct) {
 		ArrayList<Book> bookList = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("showBookList");
+		String sql = prop.getProperty("selectBookList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);

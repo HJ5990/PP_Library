@@ -17,10 +17,10 @@ WHERE A_ID = ? AND A_PWD = ?</entry>
 SELECT *
 FROM CATEGORY</entry>
 
-<entry key="showBookList">
+<entry key="selectBookList">
 SELECT *
 FROM BOOK
-WHERE C_NO = ?</entry>
+WHERE C_NO = ? AND QUANTITY > 0</entry>
 
 
 <entry key="driver">oracle.jdbc.driver.OracleDriver</entry>
