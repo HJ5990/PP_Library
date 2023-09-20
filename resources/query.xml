@@ -18,9 +18,17 @@ SELECT *
 FROM CATEGORY</entry>
 
 <entry key="selectBookList">
-SELECT *
+SELECT B_NO, C_NAME, B_NAME, AUTHOR, PUBLISHDATE, QUANTITY
 FROM BOOK
+JOIN CATEGORY USING(C_NO)
 WHERE C_NO = ? AND QUANTITY >= 1 </entry>
+
+<entry key="rentalBook">
+INSERT INTO RENTALLOG VALUES 
+    (SEQ_RENT.NEXTVAL, SYSDATE, ?, ?, '대여') </entry>
+
+
+
 
 
 <entry key="driver">oracle.jdbc.driver.OracleDriver</entry>

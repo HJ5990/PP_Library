@@ -97,7 +97,7 @@ public class LibraryMenu {
 			
 			switch(num) {
 				case 1: 
-					rentalBook();
+					rentalBook(mNo);
 					break;
 				case 2:
 					break;
@@ -122,7 +122,7 @@ public class LibraryMenu {
 	// 1.대여
 	
 	/** 카테고리 보여주고, 카테고리에 맞는 책 보여준 뒤, 책번호 반환하는 메서드 */
-	public void rentalBook() {
+	public void rentalBook(int mNo) {
 		int ct = lc.selectCategory();
 		
 		// 선택한 카테고리에 데이터가 없으면 메서드 종료
@@ -134,12 +134,8 @@ public class LibraryMenu {
 		if (bNo < 1) {
 			return;
 		}
-		
-		
 		// 회원번호, 선택한 책 이용해서 대여처리 해주고, 재고 -1 처리 하기
-		
-		
-
+		lc.rentalBook(mNo, bNo);
 	}
 	
 	
@@ -238,7 +234,7 @@ public class LibraryMenu {
 	
 	public int displayBookList(ArrayList<Book> bookList) {
 		System.out.println("\n====================================");
-		System.out.println("책번호\t카테고리\t책이름\t\t\t저자\t\t출간일\t수량");
+		System.out.println("책번호\t카테고리\t책이름\t\t저자\t\t출간일\t수량");
 		for (Book b : bookList) {
 			System.out.println(b);
 		}
