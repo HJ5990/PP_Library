@@ -20,7 +20,7 @@ FROM CATEGORY</entry>
 <entry key="selectBookList">
 SELECT *
 FROM BOOK
-WHERE C_NO = ? AND QUANTITY > 0</entry>
+WHERE C_NO = ? AND QUANTITY >= 1 </entry>
 
 
 <entry key="driver">oracle.jdbc.driver.OracleDriver</entry>

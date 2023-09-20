@@ -44,7 +44,8 @@ public class LibraryDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, pwd);
-			rset = pstmt.executeQuery();			
+			rset = pstmt.executeQuery();	
+			
 			if(rset.next()) {
 				result = rset.getInt(1);
 			}				
@@ -103,6 +104,8 @@ public class LibraryDao {
 		return ctList;
 	}
 	
+		
+	
 	// 카테고리에 맞는 책 + 수량 1개이상인 책 불러옴
 	public ArrayList<Book> selectBookList(Connection conn, int ct) {
 		ArrayList<Book> bookList = new ArrayList<>();
@@ -113,6 +116,7 @@ public class LibraryDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, ct);
+			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
 				Book b = new Book(rset.getInt("B_NO"),

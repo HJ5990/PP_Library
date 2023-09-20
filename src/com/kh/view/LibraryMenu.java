@@ -6,7 +6,6 @@ import java.util.Scanner;
 import com.kh.controller.LibraryController;
 import com.kh.model.vo.Book;
 import com.kh.model.vo.Category;
-import com.kh.model.vo.Member;
 
 public class LibraryMenu {
 	
@@ -136,6 +135,7 @@ public class LibraryMenu {
 			return;
 		}
 		
+		
 		// 회원번호, 선택한 책 이용해서 대여처리 해주고, 재고 -1 처리 하기
 		
 		
@@ -163,8 +163,8 @@ public class LibraryMenu {
 	public void adminMenu() {
 		while(true) {
 			System.out.println("\n=======[기본메뉴]=======");
-			System.out.println("1. 책 등록");
-			System.out.println("2. 책 삭제");
+			System.out.println("1. 도서 등록");
+			System.out.println("2. 도서 삭제");
 			System.out.println("3. 회원 등록");
 			System.out.println("4. 회원 삭제");
 			System.out.println("5. 회원 정보 변경");
@@ -237,8 +237,8 @@ public class LibraryMenu {
 	}
 	
 	public int displayBookList(ArrayList<Book> bookList) {
-		System.out.println("====================================");
-		System.out.println("책번호\t카테고리\t책이름\t\t저자\t\t출간일\t수량");
+		System.out.println("\n====================================");
+		System.out.println("책번호\t카테고리\t책이름\t\t\t저자\t\t출간일\t수량");
 		for (Book b : bookList) {
 			System.out.println(b);
 		}
