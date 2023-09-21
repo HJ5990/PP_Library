@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.model.service.LibraryService;
 import com.kh.model.vo.Book;
 import com.kh.model.vo.Category;
+import com.kh.model.vo.RentalLog;
 import com.kh.view.LibraryMenu;
 
 public class LibraryController {
@@ -53,6 +54,17 @@ public class LibraryController {
 			bNo = new LibraryMenu().displayBookList(bookList);
 		}
 		return bNo;
+	}
+	
+	
+	public void rentalBook(int mNo, int bNo) {
+		int result = new LibraryService().rentalBook(mNo, bNo);
+		
+		if(result > 0) {
+			new LibraryMenu().displaySuccess("대여 완료");
+		} else {
+			new LibraryMenu().displayFail("대여 실패");
+		}
 	}
 	
 	

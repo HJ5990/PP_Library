@@ -7,6 +7,7 @@ import com.kh.common.JDBCTemplate;
 import com.kh.model.dao.LibraryDao;
 import com.kh.model.vo.Book;
 import com.kh.model.vo.Category;
+import com.kh.model.vo.RentalLog;
 
 public class LibraryService {
 	// JDBC Driver 등록
@@ -40,6 +41,18 @@ public class LibraryService {
 		ArrayList<Book> bookList = new LibraryDao().selectBookList(conn, ct);
 		JDBCTemplate.close(conn);
 		return bookList;
+	}
+	
+	public int rentalBook(int mNo, int bNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new LibraryDao().rentalBook(conn, mNo, bNo);
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
 	}
 	
 	

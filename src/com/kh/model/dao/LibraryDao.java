@@ -12,6 +12,7 @@ import java.util.Properties;
 import com.kh.common.JDBCTemplate;
 import com.kh.model.vo.Book;
 import com.kh.model.vo.Category;
+import com.kh.model.vo.RentalLog;
 
 public class LibraryDao {
 	// DA에 직접 접근, sql 실행후 결과 반환
@@ -120,7 +121,7 @@ public class LibraryDao {
 			
 			while(rset.next()) {
 				Book b = new Book(rset.getInt("B_NO"),
-									rset.getInt("C_NO"),
+									rset.getString("C_NAME"),
 									rset.getString("B_NAME"),
 									rset.getString("AUTHOR"),
 									rset.getDate("PUBLISHDATE"),
@@ -136,6 +137,28 @@ public class LibraryDao {
 		}
 		return bookList;		
 	}
+	
+	public int rentalBook(Connection conn, int mNo, int bNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("rentalBook");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mNo);
+			pstmt.setInt(2, bNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	
+	
 	
 	
 }
