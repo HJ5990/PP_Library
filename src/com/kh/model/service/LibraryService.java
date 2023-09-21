@@ -55,6 +55,29 @@ public class LibraryService {
 		return result;
 	}
 	
+	public ArrayList<RentalLog> selectReturnBook(int mNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<RentalLog> rentalList = new LibraryDao().selectReturnBook(conn, mNo);
+		JDBCTemplate.close(conn);
+		return rentalList;
+	}
+	
+	public int returnBook(int rNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new LibraryDao().returnBook(conn, rNo);
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+	
+	public void bestSeller() {
+		Connection conn = JDBCTemplate.getConnection();
+		new LibraryDao().bestSeller(conn);
+	}
 	
 	
 	

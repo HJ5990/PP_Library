@@ -157,6 +157,54 @@ public class LibraryDao {
 		return result;
 	}
 	
+	public ArrayList<RentalLog> selectReturnBook(Connection conn, int mNo) {
+		ArrayList<RentalLog> rentalList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectReturnBook");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				RentalLog rl = new RentalLog(rset.getInt("R_NO"),
+									rset.getDate("REN_DATE"),
+									rset.getString("B_NAME")
+									);
+				rentalList.add(rl);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return rentalList;	
+	}
+	
+	
+	public int returnBook(Connection conn, int rNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("returnBook");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rNo);
+			result = pstmt.executeUpdate();			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	public void bestSeller(Connection conn) {
+		
+	}
 	
 	
 	

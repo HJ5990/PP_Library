@@ -6,6 +6,7 @@ import java.util.Scanner;
 import com.kh.controller.LibraryController;
 import com.kh.model.vo.Book;
 import com.kh.model.vo.Category;
+import com.kh.model.vo.RentalLog;
 
 public class LibraryMenu {
 	
@@ -85,9 +86,9 @@ public class LibraryMenu {
 			System.out.println("\n=======[회원메뉴]=======");
 			System.out.println("1. 대여");
 			System.out.println("2. 반납");
-			System.out.println("3. 도서 목록 조회");
-			System.out.println("4. 베스트샐러");
-			System.out.println("5. 신간");
+			System.out.println("3. 베스트셀러");
+			System.out.println("4. 신간조회");
+			System.out.println("5. 도서 목록 열람");
 			System.out.println("6. 도서 찾기");
 			System.out.println("9. 뒤로");
 			System.out.println("===================");
@@ -100,8 +101,10 @@ public class LibraryMenu {
 					rentalBook(mNo);
 					break;
 				case 2:
+					returnBook(mNo);
 					break;
 				case 3:
+					lc.bestSeller();
 					break;
 				case 4:
 					break;
@@ -121,14 +124,15 @@ public class LibraryMenu {
 	//--------------------------------------------------------------------------------------------------
 	// 1.대여
 	
-	/** 카테고리 보여주고, 카테고리에 맞는 책 보여준 뒤, 책번호 반환하는 메서드 */
+	/** 카테고리 보여주고, 카테고리에 맞는 책 보여준 뒤, 책번호 입력받아서, 대여처리 */
 	public void rentalBook(int mNo) {
-		int ct = lc.selectCategory();
-		
+		// 카테고리 선택하기
+		int ct = lc.selectCategory();	
 		// 선택한 카테고리에 데이터가 없으면 메서드 종료
 		if(ct < 1) {
 			return;
 		}		
+		// 책 선택하기
 		int bNo = lc.selectBookList(ct);
 		// 해당 책배열에 데이터가 없으면 메서드 종료
 		if (bNo < 1) {
@@ -139,6 +143,15 @@ public class LibraryMenu {
 	}
 	
 	
+	// 2. 반납
+	/** 가지고 있는 책 보여주고, 선택한 책번호 반납처리*/
+	public void returnBook(int mNo) {
+		// 반납할 책 보여주고 선택
+		int rNo = lc.selectReturnBook(mNo);
+		// 반납할 책 이용해서 반납처리 해주고, 재고 +1 처리하기
+		lc.returnBook(rNo);
+		
+	}
 	
 
 	
@@ -234,17 +247,45 @@ public class LibraryMenu {
 	
 	public int displayBookList(ArrayList<Book> bookList) {
 		System.out.println("\n====================================");
-		System.out.println("책번호\t카테고리\t책이름\t\t저자\t\t출간일\t수량");
+		System.out.println("책번호\t카테고리\t도서명\t\t저자\t\t출간일\t수량");
 		for (Book b : bookList) {
 			System.out.println(b);
 		}
 		System.out.println("====================================");
 		System.out.print("책번호 입력 : ");
-		int bNo = sc.nextInt();
+		int select = sc.nextInt();
 		sc.nextLine();
+		// 선택한 번호의 책이 있는지 확인 작업
+		int bNo = 0;
+		for (Book b : bookList) {
+			if (b.getbNo() == select) {
+				bNo = select;
+				break;
+			}
+		}
 		return bNo;
 	}
 	
+	public int displayRentalList(ArrayList<RentalLog> rentalList) {
+		System.out.println("\n====================================");
+		System.out.println("대여번호\t대여날짜\t도서명");
+		for (RentalLog rl : rentalList) {
+			System.out.println(rl.getrNo() + "\t" + rl.getRenDate() + "\t" + rl.getbName());
+		}
+		System.out.println("====================================");
+		System.out.print("대여번호 입력 : ");
+		int select = sc.nextInt();
+		sc.nextLine();
+		// 선택한 번호의 책이 있는지 확인 작업
+		int rNo = 0;
+		for (RentalLog rl : rentalList) {
+			if (rl.getrNo() == select) {
+				rNo = select;
+				break;
+			}
+		}
+		return rNo;
+	}
 
 	
 	

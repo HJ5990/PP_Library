@@ -6,19 +6,21 @@ import java.sql.Date;
 public class RentalLog {
 	
 	private int rNo;
-	private Date rrDate; 
+	private Date renDate; 
 	private int mNo;
 	private int bNo;
 	private String rrCheck;
+	private Date retDate; 
+	private String bName;
 	
 	public RentalLog() {
 		super();
 	}
 
-	public RentalLog(int rNo, Date rrDate, int mNo, int bNo, String rrCheck) {
+	public RentalLog(int rNo, Date renDate, int mNo, int bNo, String rrCheck) {
 		super();
 		this.rNo = rNo;
-		this.rrDate = rrDate;
+		this.renDate = renDate;
 		this.mNo = mNo;
 		this.bNo = bNo;
 		this.rrCheck = rrCheck;
@@ -29,9 +31,17 @@ public class RentalLog {
 		this.mNo = mNo;
 		this.bNo = bNo;
 	};
+	
 
+	public RentalLog(int rNo, Date renDate, String bName) {
+		super();
+		this.rNo = rNo;
+		this.renDate = renDate;
+		this.bName = bName;
+	}
 	
 	
+
 	public int getrNo() {
 		return rNo;
 	}
@@ -40,12 +50,12 @@ public class RentalLog {
 		this.rNo = rNo;
 	}
 
-	public Date getRrDate() {
-		return rrDate;
+	public Date getRenDate() {
+		return renDate;
 	}
 
-	public void setRrDate(Date rrDate) {
-		this.rrDate = rrDate;
+	public void setRrDate(Date renDate) {
+		this.renDate = renDate;
 	}
 
 	public int getmNo() {
@@ -71,10 +81,28 @@ public class RentalLog {
 	public void setRrCheck(String rrCheck) {
 		this.rrCheck = rrCheck;
 	}
+	
+	public String getbName() {
+		return bName;
+	}
+
+	public void setbName(String bName) {
+		this.bName = bName;
+	}
+	
+	public Date getRetDate() {
+		return retDate;
+	}
+
+	public void setRetDate(Date retDate) {
+		this.retDate = retDate;
+	}
+
+
 
 	@Override
 	public String toString() {
-		return rNo + "\t" + rrDate + "\t" + mNo + "\t" + bNo + "\t" + rrCheck;
+		return rNo + "\t" + renDate + "\t" + mNo + "\t" + bNo + "\t" + rrCheck + "\t" + retDate;
 	}
 	
 	

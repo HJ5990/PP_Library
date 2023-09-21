@@ -52,6 +52,9 @@ public class LibraryController {
 			new LibraryMenu().displayFail("데이터가 없습니다");
 		} else {
 			bNo = new LibraryMenu().displayBookList(bookList);
+			if (bNo == 0) {
+				new LibraryMenu().displayFail("선택한 번호에 해당하는 책이 없습니다");
+			}
 		}
 		return bNo;
 	}
@@ -65,6 +68,34 @@ public class LibraryController {
 		} else {
 			new LibraryMenu().displayFail("대여 실패");
 		}
+	}
+	
+	public int selectReturnBook(int mNo) {
+		ArrayList<RentalLog> rentalList = new LibraryService().selectReturnBook(mNo);
+		int rNo = 0;
+		if (rentalList.isEmpty()) {
+			new LibraryMenu().displayFail("대여 기록이 없습니다");
+		} else {
+			rNo = new LibraryMenu().displayRentalList(rentalList);
+			if (rNo == 0) {
+				new LibraryMenu().displayFail("선택한 번호에 해당하는 책이 없습니다");
+			}
+		}	
+		return rNo;
+	}
+	
+	public void returnBook(int rNo) {
+		int result = new LibraryService().returnBook(rNo);
+		if(result > 0) {
+			new LibraryMenu().displaySuccess("반납 완료");
+		} else {
+			new LibraryMenu().displayFail("반납 실패");
+		}
+	}
+	
+	public void bestSeller() {
+		new LibraryService().bestSeller();
+		
 	}
 	
 	
