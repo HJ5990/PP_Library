@@ -247,7 +247,7 @@ public class LibraryMenu {
 	
 	public int displayBookList(ArrayList<Book> bookList) {
 		System.out.println("\n====================================");
-		System.out.println("책번호\t카테고리\t도서명\t\t저자\t\t출간일\t수량");
+		System.out.println("도서번호\t카테고리\t도서명\t\t저자\t\t출간일\t수량");
 		for (Book b : bookList) {
 			System.out.println(b);
 		}
@@ -286,6 +286,16 @@ public class LibraryMenu {
 		}
 		return rNo;
 	}
+	
+	public void displayBestSeller(ArrayList<Book> bestSeller) {
+		System.out.println("\n====================================");
+		System.out.println("도서번호\t카테고리\t도서명\t\t저자\t\t출간일");
+		for (Book b : bestSeller) {
+			System.out.println(b.getbNo() + "\t" + b.getcName() + "\t" + b.getbName() + "\t\t" + b.getAuthor() + "\t\t" + b.getPublishdate());
+		}
+		System.out.println("====================================");
+	}
+	
 
 	
 	

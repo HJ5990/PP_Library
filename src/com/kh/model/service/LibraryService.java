@@ -74,9 +74,11 @@ public class LibraryService {
 		return result;
 	}
 	
-	public void bestSeller() {
+	public ArrayList<Book> bestSeller() {
 		Connection conn = JDBCTemplate.getConnection();
-		new LibraryDao().bestSeller(conn);
+		ArrayList<Book> bestSeller = new LibraryDao().bestSeller(conn);
+		JDBCTemplate.close(conn);
+		return bestSeller;
 	}
 	
 	

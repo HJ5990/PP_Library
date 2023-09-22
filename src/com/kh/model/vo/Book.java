@@ -28,8 +28,15 @@ public class Book {
 
 	
 	
-	
-	
+	public Book(int bNo, String cName, String bName, String author, Date publishdate) {
+		super();
+		this.bNo = bNo;
+		this.cName = cName;
+		this.bName = bName;
+		this.author = author;
+		this.publishdate = publishdate;
+	}
+
 	public int getbNo() {
 		return bNo;
 	}
@@ -52,6 +59,14 @@ public class Book {
 
 	public void setbName(String bName) {
 		this.bName = bName;
+	}
+
+	public String getcName() {
+		return cName;
+	}
+
+	public void setcName(String cName) {
+		this.cName = cName;
 	}
 
 	public String getAuthor() {

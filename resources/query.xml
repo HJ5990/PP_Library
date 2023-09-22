@@ -41,6 +41,22 @@ UPDATE RENTALLOG
 SET RR_CHECK = '반납', RET_DATE = SYSDATE
 WHERE R_NO = ? </entry>
 
+<entry key="bestSeller">
+SELECT B_NO, C_NAME, B_NAME, AUTHOR, PUBLISHDATE
+FROM BOOK
+JOIN CATEGORY USING(C_NO)
+WHERE B_NO IN (SELECT B_NO
+                FROM (SELECT B_NO, COUNT(*)
+                        FROM RENTALLOG
+                        GROUP BY B_NO
+                        ORDER BY 2 DESC)
+                WHERE ROWNUM &lt;= 5)
+ORDER BY (
+    SELECT COUNT(*)
+    FROM RENTALLOG
+    WHERE B_NO = BOOK.B_NO
+) DESC </entry>
+
 
 
 

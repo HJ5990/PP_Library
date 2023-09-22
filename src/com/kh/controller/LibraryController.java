@@ -94,8 +94,12 @@ public class LibraryController {
 	}
 	
 	public void bestSeller() {
-		new LibraryService().bestSeller();
-		
+		ArrayList<Book> bestSeller = new LibraryService().bestSeller();
+		if (bestSeller.isEmpty()) {
+			new LibraryMenu().displayFail("데이터가 없습니다");
+		} else {
+			new LibraryMenu().displayBestSeller(bestSeller);
+		}	
 	}
 	
 	

@@ -184,5 +184,38 @@ UPDATE RENTALLOG
 SET RR_CHECK = '반납', RET_DATE = SYSDATE
 WHERE R_NO = 10;
 
+-- 베스트샐러 조회
+-- 1) RENTALLOG에서 책별 카운트 하기
+SELECT B_NO, COUNT(*)
+FROM RENTALLOG
+GROUP BY B_NO
+ORDER BY 2 DESC;
+
+-- 2) 5개만 추리기
+SELECT B_NO
+FROM (SELECT B_NO, COUNT(*)
+        FROM RENTALLOG
+        GROUP BY B_NO
+        ORDER BY 2 DESC)
+WHERE ROWNUM <=5;
+
+-- 3) 추려진 5개의 B_NO 이용해서 BOOK 의 책정보 출력
+SELECT B_NO, C_NAME, B_NAME, AUTHOR, PUBLISHDATE
+FROM BOOK
+JOIN CATEGORY USING(C_NO)
+WHERE B_NO IN (SELECT B_NO
+                FROM (SELECT B_NO, COUNT(*)
+                        FROM RENTALLOG
+                        GROUP BY B_NO
+                        ORDER BY 2 DESC)
+                WHERE ROWNUM <=5)
+ORDER BY (
+    SELECT COUNT(*)
+    FROM RENTALLOG
+    WHERE B_NO = BOOK.B_NO
+) DESC;
+
+
+
 
 
