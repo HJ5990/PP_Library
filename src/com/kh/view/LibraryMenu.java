@@ -107,6 +107,7 @@ public class LibraryMenu {
 					lc.bestSeller();
 					break;
 				case 4:
+					lc.newBook();
 					break;
 				case 5:
 					break;

@@ -102,6 +102,10 @@ public class LibraryController {
 		}	
 	}
 	
+	public void newBook() {
+		new LibraryService().newBook();
+	}
+	
 	
 	
 }

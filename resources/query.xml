@@ -57,7 +57,13 @@ ORDER BY (
     WHERE B_NO = BOOK.B_NO
 ) DESC </entry>
 
-
+<entry key="newBook"> 
+SELECT *
+FROM (SELECT B_NO, C_NAME, B_NAME, AUTHOR, PUBLISHDATE
+        FROM BOOK
+        JOIN CATEGORY USING(C_NO)
+        ORDER BY 5 DESC)
+WHERE ROWNUM &lt;= 5 </entry>
 
 
 

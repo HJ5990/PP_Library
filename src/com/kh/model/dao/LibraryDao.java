@@ -202,6 +202,7 @@ public class LibraryDao {
 		return result;
 	}
 	
+	
 	public ArrayList<Book> bestSeller(Connection conn) {
 		ArrayList<Book> bestSeller = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -228,6 +229,35 @@ public class LibraryDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return bestSeller;
+	}
+	
+	
+	public ArrayList<Book> newBook(Connection conn) {
+		ArrayList<Book> newBook = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("newBook");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Book b = new Book(rset.getInt("B_NO"),
+									rset.getString("C_NAME"),
+									rset.getString("B_NAME"),
+									rset.getString("AUTHOR"),
+									rset.getDate("PUBLISHDATE")
+									);
+				newBook.add(b);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return newBook;
 	}
 	
 	
