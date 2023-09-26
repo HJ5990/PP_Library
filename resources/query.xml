@@ -3,71 +3,71 @@
 <properties>
 <comment>properties test</comment>
 
-<entry key="memberLogin">
-SELECT M_NO
-FROM MEMBER
-WHERE M_ID = ? AND M_PWD = ?</entry>
+	<entry key="memberLogin">
+	SELECT M_NO
+	FROM MEMBER
+	WHERE M_ID = ? AND M_PWD = ?</entry>
+	
+	<entry key="adminLogin">
+	SELECT A_NO
+	FROM ADMIN
+	WHERE A_ID = ? AND A_PWD = ?</entry>
+	
+	<entry key="selectCategory">
+	SELECT *
+	FROM CATEGORY
+	ORDER BY C_NO</entry>
+	
+	<entry key="selectBookList">
+	SELECT B_NO, C_NAME, B_NAME, AUTHOR, PUBLISHDATE, QUANTITY
+	FROM BOOK
+	JOIN CATEGORY USING(C_NO)
+	WHERE C_NO = ? AND QUANTITY >= 1
+	ORDER BY 1</entry>
+	
+	<entry key="rentalBook">
+	INSERT INTO RENTALLOG VALUES 
+	    (SEQ_RENT.NEXTVAL, SYSDATE, ?, ?, '대여', NULL) </entry>
+	       
+	<entry key="selectReturnBook">
+	SELECT R_NO, REN_DATE, B_NAME
+	FROM RENTALLOG
+	JOIN BOOK USING (B_NO)
+	WHERE M_NO = ? AND RR_CHECK = '대여'
+	ORDER BY 1</entry>
+	
+	<entry key="returnBook">
+	UPDATE RENTALLOG
+	SET RR_CHECK = '반납', RET_DATE = SYSDATE
+	WHERE R_NO = ? </entry>
+	
+	<entry key="bestSeller">
+	SELECT B_NO, C_NAME, B_NAME, AUTHOR, PUBLISHDATE
+	FROM BOOK
+	JOIN CATEGORY USING(C_NO)
+	WHERE B_NO IN (SELECT B_NO
+	                FROM (SELECT B_NO, COUNT(*)
+	                        FROM RENTALLOG
+	                        GROUP BY B_NO
+	                        ORDER BY 2 DESC)
+	                WHERE ROWNUM &lt;= 5)
+	ORDER BY (
+	    SELECT COUNT(*)
+	    FROM RENTALLOG
+	    WHERE B_NO = BOOK.B_NO
+	) DESC </entry>
+	
+	<entry key="newBook"> 
+	SELECT *
+	FROM (SELECT B_NO, C_NAME, B_NAME, AUTHOR, PUBLISHDATE
+	        FROM BOOK
+	        JOIN CATEGORY USING(C_NO)
+	        ORDER BY 5 DESC)
+	WHERE ROWNUM &lt;= 5 </entry>
 
-<entry key="adminLogin">
-SELECT A_NO
-FROM ADMIN
-WHERE A_ID = ? AND A_PWD = ?</entry>
-
-<entry key="selectCategory">
-SELECT *
-FROM CATEGORY
-ORDER BY C_NO</entry>
-
-<entry key="selectBookList">
-SELECT B_NO, C_NAME, B_NAME, AUTHOR, PUBLISHDATE, QUANTITY
-FROM BOOK
-JOIN CATEGORY USING(C_NO)
-WHERE C_NO = ? AND QUANTITY >= 1
-ORDER BY 1</entry>
-
-<entry key="rentalBook">
-INSERT INTO RENTALLOG VALUES 
-    (SEQ_RENT.NEXTVAL, SYSDATE, ?, ?, '대여', NULL) </entry>
-       
-<entry key="selectReturnBook">
-SELECT R_NO, REN_DATE, B_NAME
-FROM RENTALLOG
-JOIN BOOK USING (B_NO)
-WHERE M_NO = ? AND RR_CHECK = '대여'
-ORDER BY 1</entry>
-
-<entry key="returnBook">
-UPDATE RENTALLOG
-SET RR_CHECK = '반납', RET_DATE = SYSDATE
-WHERE R_NO = ? </entry>
-
-<entry key="bestSeller">
-SELECT B_NO, C_NAME, B_NAME, AUTHOR, PUBLISHDATE
-FROM BOOK
-JOIN CATEGORY USING(C_NO)
-WHERE B_NO IN (SELECT B_NO
-                FROM (SELECT B_NO, COUNT(*)
-                        FROM RENTALLOG
-                        GROUP BY B_NO
-                        ORDER BY 2 DESC)
-                WHERE ROWNUM &lt;= 5)
-ORDER BY (
-    SELECT COUNT(*)
-    FROM RENTALLOG
-    WHERE B_NO = BOOK.B_NO
-) DESC </entry>
-
-<entry key="newBook"> 
-SELECT *
-FROM (SELECT B_NO, C_NAME, B_NAME, AUTHOR, PUBLISHDATE
-        FROM BOOK
-        JOIN CATEGORY USING(C_NO)
-        ORDER BY 5 DESC)
-WHERE ROWNUM &lt;= 5 </entry>
 
 
-
-<entry key="driver">oracle.jdbc.driver.OracleDriver</entry>
-<entry key="url">jdbc:oracle:thin:@localhost:1521:xe</entry>
-<entry key="username">PP_L</entry>
+	<entry key="driver">oracle.jdbc.driver.OracleDriver</entry>
+	<entry key="url">jdbc:oracle:thin:@localhost:1521:xe</entry>
+	<entry key="username">PP_L</entry>
 </properties>
