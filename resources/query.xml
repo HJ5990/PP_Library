@@ -65,6 +65,22 @@
 	        ORDER BY 5 DESC)
 	WHERE ROWNUM &lt;= 5 </entry>
 
+	<entry key="searchBookName">
+	SELECT B_NO, C_NAME, B_NAME, AUTHOR, PUBLISHDATE
+	FROM BOOK
+	JOIN CATEGORY USING(C_NO)
+	WHERE B_NAME LIKE '%' || ? || '%'</entry>
+	
+	<entry key="searchBookAuthor">
+	SELECT B_NO, C_NAME, B_NAME, AUTHOR, PUBLISHDATE
+	FROM BOOK
+	JOIN CATEGORY USING(C_NO)
+	WHERE AUTHOR LIKE '%' || ? || '%'</entry>
+
+
+
+
+
 
 
 	<entry key="driver">oracle.jdbc.driver.OracleDriver</entry>

@@ -81,10 +81,27 @@ public class LibraryService {
 		return bestSeller;
 	}
 	
-	public void newBook() {
+	public ArrayList<Book> newBook() {
 		Connection conn = JDBCTemplate.getConnection();
 		ArrayList<Book> newBook = new LibraryDao().newBook(conn);
+		JDBCTemplate.close(conn);
+		return newBook;
 	}
+	
+	public ArrayList<Book> searchBookName(String str1) {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Book> searchBookName = new LibraryDao().searchBookName(conn, str1);
+		JDBCTemplate.close(conn);
+		return searchBookName;
+	}
+	
+	public ArrayList<Book> searchBookAuthor(String str2) {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Book> searchBookAuthor = new LibraryDao().searchBookAuthor(conn, str2);
+		JDBCTemplate.close(conn);
+		return searchBookAuthor;
+	}
+	
 	
 	
 	

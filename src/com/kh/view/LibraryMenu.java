@@ -110,8 +110,10 @@ public class LibraryMenu {
 					lc.newBook();
 					break;
 				case 5:
+					showMeBookList();
 					break;
 				case 6:
+					searchBook();
 					break;
 				case 9:
 					return;
@@ -154,7 +156,53 @@ public class LibraryMenu {
 		
 	}
 	
-
+	
+	//5. 책 목록 열람
+	/** 카테고리별 도서 목록 열람 */
+	public void showMeBookList() {
+		// 카테고리 선택하기
+		int ct = lc.selectCategory();	
+		// 선택한 카테고리에 데이터가 없으면 메서드 종료
+		if(ct < 1) {
+			return;
+		}		
+		lc.showMeBookList(ct);
+	}
+	
+	
+	// 6. 도서 찾기
+	/** 도서명, 저자로 찾기 */
+	public void searchBook() {
+		while (true) {
+			System.out.println("\n======[도서조회]======");
+			System.out.println("1. 도서명으로 조회");
+			System.out.println("2. 저자로 조회");
+			System.out.println("9. 뒤로");
+			System.out.println("===================");
+			System.out.print("번호 입력 : ");
+			int num = sc.nextInt();
+			sc.nextLine();
+			
+			switch(num) {
+				case 1 :
+					System.out.print("\n키워드 입력 : ");
+					String str1 = sc.nextLine();
+					lc.searchBookName(str1);
+					return;
+				case 2 : 
+					System.out.print("\n키워드 입력 : ");
+					String str2 = sc.nextLine();
+					lc.searchBookAuthor(str2);
+					return;
+				case 9 :
+					return;
+				default :
+					System.out.println("\n잘못 입력하셨습니다.");
+			}
+			
+			
+		}	
+	}
 	
 	
 	
@@ -248,7 +296,7 @@ public class LibraryMenu {
 	
 	public int displayBookList(ArrayList<Book> bookList) {
 		System.out.println("\n====================================");
-		System.out.println("도서번호\t카테고리\t도서명\t\t저자\t\t출간일\t수량");
+		System.out.println("도서번호\t카테고리\t도서명\t\t\t저자\t\t출간일\t수량");
 		for (Book b : bookList) {
 			System.out.println(b);
 		}
@@ -288,18 +336,17 @@ public class LibraryMenu {
 		return rNo;
 	}
 	
-	public void displayBestSeller(ArrayList<Book> bestSeller) {
+	public void displayList(ArrayList<Book> bookList) {
 		System.out.println("\n====================================");
-		System.out.println("도서번호\t카테고리\t도서명\t\t저자\t\t출간일");
-		for (Book b : bestSeller) {
-			System.out.println(b.getbNo() + "\t" + b.getcName() + "\t" + b.getbName() + "\t\t" + b.getAuthor() + "\t\t" + b.getPublishdate());
+		System.out.println("도서번호\t카테고리\t도서명\t\t\t저자\t\t출간일");
+		for (Book b : bookList) {
+			System.out.println(b.getbNo() + "\t" + b.getcName() + "\t" + String.format("%-15s", b.getbName()) + 
+								"\t" +  String.format("%-10s", b.getAuthor()) + "\t" +  b.getPublishdate());
 		}
 		System.out.println("====================================");
 	}
 	
 
-	
-	
 	
 	
 	//--------------------------------------------------------------------------------------------------

@@ -98,12 +98,44 @@ public class LibraryController {
 		if (bestSeller.isEmpty()) {
 			new LibraryMenu().displayFail("데이터가 없습니다");
 		} else {
-			new LibraryMenu().displayBestSeller(bestSeller);
+			new LibraryMenu().displayList(bestSeller);
+		}	
+	}
+		
+	public void newBook() {
+		ArrayList<Book> newBook = new LibraryService().newBook();
+		if (newBook.isEmpty()) {
+			new LibraryMenu().displayFail("데이터가 없습니다");
+		} else {
+			new LibraryMenu().displayList(newBook);
 		}	
 	}
 	
-	public void newBook() {
-		new LibraryService().newBook();
+	public void showMeBookList(int ct) {
+		ArrayList<Book> showMeBookList = new LibraryService().selectBookList(ct);
+		if (showMeBookList.isEmpty()) {
+			new LibraryMenu().displayFail("데이터가 없습니다");
+		} else {
+			new LibraryMenu().displayList(showMeBookList);
+		}	
+	}
+	
+	public void searchBookName(String str1) {
+		ArrayList<Book> searchBookName = new LibraryService().searchBookName(str1);
+		if (searchBookName.isEmpty()) {
+			new LibraryMenu().displayFail("키워드에 해당하는 책이 없습니다");
+		} else {
+			new LibraryMenu().displayList(searchBookName);
+		}	
+	}
+	
+	public void searchBookAuthor(String str2) {
+		ArrayList<Book> searchBookAuthor = new LibraryService().searchBookAuthor(str2);
+		if (searchBookAuthor.isEmpty()) {
+			new LibraryMenu().displayFail("키워드에 해당하는 책이 없습니다");
+		} else {
+			new LibraryMenu().displayList(searchBookAuthor);
+		}	
 	}
 	
 	

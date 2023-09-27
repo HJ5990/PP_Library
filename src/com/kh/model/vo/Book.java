@@ -96,8 +96,8 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return bNo + "\t" + cName + "\t" + bName + "\t\t" + author + "\t\t"
-				+ publishdate + "\t" + quantity;
+		return bNo + "\t" + cName + "\t" + String.format("%-15s", bName) + "\t" + 
+				String.format("%-10s", author) + "\t" + publishdate + "\t" + quantity;
 	}
 	
 	

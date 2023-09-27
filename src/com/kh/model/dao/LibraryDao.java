@@ -138,6 +138,7 @@ public class LibraryDao {
 		return bookList;		
 	}
 	
+	
 	public int rentalBook(Connection conn, int mNo, int bNo) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -156,6 +157,7 @@ public class LibraryDao {
 		}
 		return result;
 	}
+	
 	
 	public ArrayList<RentalLog> selectReturnBook(Connection conn, int mNo) {
 		ArrayList<RentalLog> rentalList = new ArrayList<>();
@@ -259,6 +261,66 @@ public class LibraryDao {
 		}
 		return newBook;
 	}
+	
+	public ArrayList<Book> searchBookName(Connection conn, String str1) {
+		ArrayList<Book> searchBookName = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("searchBookName");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, str1);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Book b = new Book(rset.getInt("B_NO"),
+									rset.getString("C_NAME"),
+									rset.getString("B_NAME"),
+									rset.getString("AUTHOR"),
+									rset.getDate("PUBLISHDATE")
+									);
+				searchBookName.add(b);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return searchBookName;
+	}
+	
+	
+	public ArrayList<Book> searchBookAuthor(Connection conn, String str2) {
+		ArrayList<Book> searchBookAuthor = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("searchBookAuthor");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, str2);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Book b = new Book(rset.getInt("B_NO"),
+									rset.getString("C_NAME"),
+									rset.getString("B_NAME"),
+									rset.getString("AUTHOR"),
+									rset.getDate("PUBLISHDATE")
+									);
+				searchBookAuthor.add(b);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return searchBookAuthor;
+	}
+	
 	
 	
 	
