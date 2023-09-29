@@ -5,6 +5,7 @@ import java.sql.Date;
 public class Book {
 	
 	private int bNo;
+	private int cNo;
 	private String cName;
 	private String bName;
 	private String author;
@@ -26,8 +27,7 @@ public class Book {
 		this.quantity = quantity;
 	}
 
-	
-	
+
 	public Book(int bNo, String cName, String bName, String author, Date publishdate) {
 		super();
 		this.bNo = bNo;
@@ -35,6 +35,18 @@ public class Book {
 		this.bName = bName;
 		this.author = author;
 		this.publishdate = publishdate;
+	}
+	
+	
+	
+
+	public Book(int cNo, String bName, String author, Date publishdate, int quantity) {
+		super();
+		this.cNo = cNo;
+		this.bName = bName;
+		this.author = author;
+		this.publishdate = publishdate;
+		this.quantity = quantity;
 	}
 
 	public int getbNo() {
@@ -45,12 +57,12 @@ public class Book {
 		this.bNo = bNo;
 	}
 
-	public String getcNo() {
-		return cName;
+	public int getcNo() {
+		return cNo;
 	}
 
-	public void setcNo(String cName) {
-		this.cName = cName;
+	public void setcNo(int cNo) {
+		this.cNo = cNo;
 	}
 
 	public String getbName() {

@@ -12,9 +12,20 @@ public class RentalLog {
 	private String rrCheck;
 	private Date retDate; 
 	private String bName;
+	private String mName;
+	private String mPhone;
 	
 	public RentalLog() {
 		super();
+	}
+	
+	public RentalLog(int rNo, Date renDate, String bName, String mName, String mPhone) {
+		super();
+		this.rNo = rNo;
+		this.renDate = renDate;
+		this.bName = bName;
+		this.mName = mName;
+		this.mPhone = mPhone;
 	}
 
 	public RentalLog(int rNo, Date renDate, int mNo, int bNo, String rrCheck) {
@@ -26,11 +37,22 @@ public class RentalLog {
 		this.rrCheck = rrCheck;
 	}
 	
+	public RentalLog(int rNo, Date renDate, int mNo, int bNo) {
+		super();
+		this.rNo = rNo;
+		this.renDate = renDate;
+		this.mNo = mNo;
+		this.bNo = bNo;
+	}
+	
 	public RentalLog(int mNo, int bNo) {
 		super();
 		this.mNo = mNo;
 		this.bNo = bNo;
 	};
+	
+	
+	
 	
 
 	public RentalLog(int rNo, Date renDate, String bName) {
@@ -97,6 +119,23 @@ public class RentalLog {
 	public void setRetDate(Date retDate) {
 		this.retDate = retDate;
 	}
+	
+	public String getmName() {
+		return mName;
+	}
+
+	public void setmName(String mName) {
+		this.mName = mName;
+	}
+	
+	public String getmPhone() {
+		return mPhone;
+	}
+
+	public void setmPhone(String mPhone) {
+		this.mPhone = mPhone;
+	}
+
 
 
 

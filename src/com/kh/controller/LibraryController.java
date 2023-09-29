@@ -1,11 +1,14 @@
 package com.kh.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import com.kh.model.service.LibraryService;
 import com.kh.model.vo.Book;
 import com.kh.model.vo.Category;
 import com.kh.model.vo.RentalLog;
+import com.kh.model.vo.Member;
 import com.kh.view.LibraryMenu;
 
 public class LibraryController {
@@ -41,6 +44,9 @@ public class LibraryController {
 			new LibraryMenu().displayFail("데이터가 없습니다");
 		} else {
 			ct = new LibraryMenu().displayctList(ctList);
+			if (ct == 0) {
+				new LibraryMenu().displayFail("선택한 번호에 해당하는 카테고리가 없습니다");
+			}		
 		}	
 		return ct;
 	}
@@ -135,6 +141,101 @@ public class LibraryController {
 			new LibraryMenu().displayFail("키워드에 해당하는 책이 없습니다");
 		} else {
 			new LibraryMenu().displayList(searchBookAuthor);
+		}	
+	}
+	
+	
+	//------------------------------------------------------------------------
+	// 관리자
+
+	
+	
+	
+	public void addBook(int ct, String bName, String author, String publishdate, int quantity) {
+		// Date형으로 파싱하기
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date utilDate = null;	
+        try {
+			utilDate = dateFormat.parse(publishdate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+       		
+		Book b = new Book(ct, bName, author, sqlDate, quantity);
+		int result = new LibraryService().addBook(b);
+		if(result > 0) {
+			new LibraryMenu().displaySuccess("도서 등록 완료");
+		} else {
+			new LibraryMenu().displayFail("도서 등록 실패");
+		}	
+	}
+	
+	
+	public int deleteBookCheckRental(int bNo) {
+		ArrayList<RentalLog> rentalList = new LibraryService().deleteBookCheckRental(bNo);
+		int result = 1;
+		if (!rentalList.isEmpty()) {
+			new LibraryMenu().displayFail("대여중인 책은 삭제할 수 없습니다.");
+			result = 0;
+		}
+		return result;
+	}
+	
+	public void deleteBook(int bNo) {
+		int result = new LibraryService().deleteBook(bNo);
+		if(result > 0) {
+			new LibraryMenu().displaySuccess("도서 삭제 완료");
+		} else {
+			new LibraryMenu().displayFail("도서 삭제 실패");
+		}	
+	}
+	
+	public void addMember(String mId, String mPwd, String mName, String mPhone) {
+		Member m = new Member(mId, mPwd, mName, mPhone);
+		int result = new LibraryService().addMember(m);
+		if(result > 0) {
+			new LibraryMenu().displaySuccess("회원 등록 완료");
+		} else {
+			new LibraryMenu().displayFail("회원 등록 실패");
+		}	
+	}
+	
+	
+	public int deleteMemberCheckRental(String mId, String mPwd) {
+		ArrayList<RentalLog> rentalList = new LibraryService().deleteMemberCheckRental(mId, mPwd);
+		int result = 1;
+		if (!rentalList.isEmpty()) {
+			new LibraryMenu().displayFail("도서를 대여중인 회원은 삭제할 수 없습니다.");
+			result = 0;
+		}
+		return result;
+	}
+	
+	public void deleteMember(String mId, String mPwd) {
+		int result = new LibraryService().deleteMember(mId, mPwd);
+		if(result > 0) {
+			new LibraryMenu().displaySuccess("회원 삭제 완료");
+		} else {
+			new LibraryMenu().displayFail("회원 삭제 실패");
+		}	
+	}
+	
+	public void rentalStatus() {
+		ArrayList<RentalLog> rentalList = new LibraryService().rentalStatus();
+		if (rentalList.isEmpty()) {
+			new LibraryMenu().displayFail("데이터가 없습니다");
+		} else {
+			new LibraryMenu().displayRentalAllList(rentalList);
+		}	
+	}
+	
+	public void longRentalMember() {
+		ArrayList<RentalLog> rentalList = new LibraryService().longRentalMember();
+		if (rentalList.isEmpty()) {
+			new LibraryMenu().displayFail("데이터가 없습니다");
+		} else {
+			new LibraryMenu().displayLongRentalList(rentalList);
 		}	
 	}
 	

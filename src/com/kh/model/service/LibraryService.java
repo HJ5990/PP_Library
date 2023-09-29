@@ -7,6 +7,7 @@ import com.kh.common.JDBCTemplate;
 import com.kh.model.dao.LibraryDao;
 import com.kh.model.vo.Book;
 import com.kh.model.vo.Category;
+import com.kh.model.vo.Member;
 import com.kh.model.vo.RentalLog;
 
 public class LibraryService {
@@ -100,6 +101,86 @@ public class LibraryService {
 		ArrayList<Book> searchBookAuthor = new LibraryDao().searchBookAuthor(conn, str2);
 		JDBCTemplate.close(conn);
 		return searchBookAuthor;
+	}
+	
+	
+	//-----------------------------------------------------------------
+	// 관리자메뉴
+	
+	public int addBook(Book b) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new LibraryDao().addBook(conn,b);
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+	
+	public ArrayList<RentalLog> deleteBookCheckRental(int bNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<RentalLog> rentalList = new LibraryDao().deleteBookCheckRental(conn, bNo);
+		JDBCTemplate.close(conn);
+		return rentalList;
+	}
+	
+	public int deleteBook(int bNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new LibraryDao().deleteBook(conn, bNo);
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+	
+	public int addMember(Member m) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new LibraryDao().addMember(conn, m);
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+	
+	public ArrayList<RentalLog> deleteMemberCheckRental(String mId, String mPwd) {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<RentalLog> rentalList = new LibraryDao().deleteMemberCheckRental(conn, mId, mPwd);
+		JDBCTemplate.close(conn);
+		return rentalList;
+	}
+	
+	public int deleteMember(String mId, String mPwd) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new LibraryDao().deleteMember(conn, mId, mPwd);
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+	
+	public ArrayList<RentalLog> rentalStatus() {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<RentalLog> rentalList = new LibraryDao().rentalStatus(conn);
+		JDBCTemplate.close(conn);
+		return rentalList;
+	}
+	
+	public ArrayList<RentalLog>  longRentalMember() {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<RentalLog> rentalList = new LibraryDao().longRentalMember(conn);
+		JDBCTemplate.close(conn);
+		return rentalList;
 	}
 	
 	

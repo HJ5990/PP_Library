@@ -12,6 +12,7 @@ import java.util.Properties;
 import com.kh.common.JDBCTemplate;
 import com.kh.model.vo.Book;
 import com.kh.model.vo.Category;
+import com.kh.model.vo.Member;
 import com.kh.model.vo.RentalLog;
 
 public class LibraryDao {
@@ -322,7 +323,199 @@ public class LibraryDao {
 	}
 	
 	
+	//----------------------------------------------------------------------
+	// 관리자메뉴
 	
+	public int addBook(Connection conn, Book b) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("addBook");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b.getcNo());
+			pstmt.setString(2, b.getbName());
+			pstmt.setString(3, b.getAuthor());
+			pstmt.setDate(4, b.getPublishdate());
+			pstmt.setInt(5, b.getQuantity());
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	public ArrayList<RentalLog> deleteBookCheckRental(Connection conn, int bNo) {
+		ArrayList<RentalLog> rentalList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("deleteBookCheckRental");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				RentalLog r = new RentalLog(rset.getInt("M_NO"),
+									rset.getInt("B_NO")
+									);
+				rentalList.add(r);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return rentalList;
+	}
+	
+	public int deleteBook(Connection conn, int bNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteBook");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	public int addMember(Connection conn, Member m) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("addMember");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m.getmId());
+			pstmt.setString(2, m.getmPwd());
+			pstmt.setString(3, m.getmName());
+			pstmt.setString(4, m.getmPhone());		
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	public ArrayList<RentalLog> deleteMemberCheckRental(Connection conn, String mId, String mPwd) {
+		ArrayList<RentalLog> rentalList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("deleteMemberCheckRental");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mId);
+			pstmt.setString(2, mPwd);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				RentalLog r = new RentalLog(rset.getInt("M_NO"),
+									rset.getInt("B_NO")
+									);
+				rentalList.add(r);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return rentalList;
+	}
+	
+	
+	public int deleteMember(Connection conn, String mId, String mPwd) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteMember");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mId);
+			pstmt.setString(2, mPwd);
+	
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	public ArrayList<RentalLog> rentalStatus(Connection conn) {
+		ArrayList<RentalLog> rentalList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("rentalStatus");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				RentalLog r = new RentalLog(rset.getInt("R_NO"),
+									rset.getDate("REN_DATE"),
+									rset.getInt("M_NO"),
+									rset.getInt("B_NO")
+									);
+				rentalList.add(r);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return rentalList;
+	}
+	
+	public ArrayList<RentalLog> longRentalMember(Connection conn) {
+		ArrayList<RentalLog> rentalList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("longRentalMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				RentalLog r = new RentalLog(rset.getInt("R_NO"),
+									rset.getDate("REN_DATE"),
+									rset.getString("B_NAME"),
+									rset.getString("M_NAME"),
+									rset.getString("M_PHONE")
+									);
+				rentalList.add(r);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return rentalList;
+		
+	}
 	
 	
 }

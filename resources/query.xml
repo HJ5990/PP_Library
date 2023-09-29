@@ -6,7 +6,7 @@
 	<entry key="memberLogin">
 	SELECT M_NO
 	FROM MEMBER
-	WHERE M_ID = ? AND M_PWD = ?</entry>
+	WHERE M_ID = ? AND M_PWD = ? AND M_STATUS = 'TRUE'</entry>
 	
 	<entry key="adminLogin">
 	SELECT A_NO
@@ -76,14 +76,53 @@
 	FROM BOOK
 	JOIN CATEGORY USING(C_NO)
 	WHERE AUTHOR LIKE '%' || ? || '%'</entry>
+	
+	<entry key="addBook">
+	INSERT INTO BOOK VALUES 
+	    (SEQ_BOOK.NEXTVAL, ?, ?, ?, ?, ?) </entry>
+	    
+	<entry key="deleteBookCheckRental">
+	SELECT M_NO, B_NO
+	FROM RENTALLOG
+	WHERE B_NO = ? AND RR_CHECK = '대여' </entry>
+	
+	<entry key="deleteBook">
+	UPDATE BOOK
+	SET QUANTITY = 0
+	WHERE B_NO = ? </entry>
+	
+	<entry key="addMember">
+	INSERT INTO MEMBER VALUES 
+	    (SEQ_MEM.NEXTVAL, ?, ?, ?, ?, 'TRUE') </entry>
+	    
+	<entry key="deleteMemberCheckRental">
+	SELECT M_NO, B_NO
+	FROM RENTALLOG
+	WHERE M_NO = (SELECT M_NO
+                FROM MEMBER
+                WHERE M_ID = ? AND M_PWD = ?)
+     	AND RR_CHECK = '대여' </entry>
+	    
+	<entry key="deleteMember">
+	UPDATE MEMBER
+	SET M_STATUS = 'FALSE'
+	WHERE M_ID = ? AND M_PWD = ? </entry>
+	
+	<entry key="rentalStatus">
+	SELECT R_NO, REN_DATE, M_NO, B_NO
+	FROM RENTALLOG 
+	WHERE RR_CHECK = '대여'
+	ORDER BY 1 </entry>
+	
+	<entry key="longRentalMember">
+	SELECT R_NO, REN_DATE, B_NAME, M_NAME, M_PHONE
+	FROM RENTALLOG
+	JOIN BOOK USING (B_NO)
+	JOIN MEMBER USING (M_NO)
+	WHERE RR_CHECK = '대여'
+    AND MONTHS_BETWEEN(SYSDATE, REN_DATE) &#62;= 1
+	ORDER BY REN_DATE </entry>
+	    
+	
 
-
-
-
-
-
-
-	<entry key="driver">oracle.jdbc.driver.OracleDriver</entry>
-	<entry key="url">jdbc:oracle:thin:@localhost:1521:xe</entry>
-	<entry key="username">PP_L</entry>
 </properties>
