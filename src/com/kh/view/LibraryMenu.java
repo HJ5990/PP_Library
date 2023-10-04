@@ -92,7 +92,7 @@ public class LibraryMenu {
 			System.out.println("5. 도서 목록 열람");
 			System.out.println("6. 도서 찾기");
 			System.out.println("9. 뒤로");
-			System.out.println("===================");
+			System.out.println("======================");
 			System.out.print("번호 입력 : ");
 			int num = sc.nextInt();
 			sc.nextLine();
@@ -221,7 +221,7 @@ public class LibraryMenu {
 			System.out.println("2. 회원 관리");
 			System.out.println("3. 대여 관리");
 			System.out.println("9. 뒤로");
-			System.out.println("=====================");
+			System.out.println("=======================");
 			System.out.print("번호 입력 : ");
 			int num = sc.nextInt();
 			sc.nextLine();
@@ -252,7 +252,7 @@ public class LibraryMenu {
 			System.out.println("1. 도서 등록");
 			System.out.println("2. 도서 삭제");
 			System.out.println("9. 뒤로");
-			System.out.println("=====================");
+			System.out.println("=======================");
 			System.out.print("번호 입력 : ");
 			int num = sc.nextInt();
 			sc.nextLine();
@@ -279,7 +279,7 @@ public class LibraryMenu {
 			System.out.println("1. 회원 등록");
 			System.out.println("2. 회원 삭제");
 			System.out.println("9. 뒤로");
-			System.out.println("=====================");
+			System.out.println("=======================");
 			System.out.print("번호 입력 : ");
 			int num = sc.nextInt();
 			sc.nextLine();
@@ -306,7 +306,7 @@ public class LibraryMenu {
 			System.out.println("1. 대여 현황 조회");
 			System.out.println("2. 장기 미반납자 조회");
 			System.out.println("9. 뒤로");
-			System.out.println("=====================");
+			System.out.println("=======================");
 			System.out.print("번호 입력 : ");
 			int num = sc.nextInt();
 			sc.nextLine();
@@ -465,11 +465,11 @@ public class LibraryMenu {
 	}
 	
 	public int displayctList(ArrayList<Category> ctList) {
-		System.out.println("\n=======[카테고리]=======");
+		System.out.println("\n=====[카테고리]=====");
 		for (Category c : ctList) {
 			System.out.println(c);
 		}
-		System.out.println("===================");
+		System.out.println("==================");
 		System.out.print("번호 입력 : ");
 		int ct = sc.nextInt();
 		sc.nextLine();
@@ -486,12 +486,12 @@ public class LibraryMenu {
 	}
 	
 	public int displayBookList(ArrayList<Book> bookList) {
-		System.out.println("\n====================================");
-		System.out.println("도서번호\t카테고리\t도서명\t\t\t저자\t\t출간일\t수량");
+		System.out.println("\n=============================================================================");
+		System.out.println("도서번호\t카테고리\t도서명\t\t\t저자\t\t출간일\t\t수량");
 		for (Book b : bookList) {
 			System.out.println(b);
 		}
-		System.out.println("====================================");
+		System.out.println("=============================================================================");
 		System.out.print("도서번호 입력 : ");
 		int select = sc.nextInt();
 		sc.nextLine();
@@ -508,7 +508,7 @@ public class LibraryMenu {
 	
 	public int displayRentalList(ArrayList<RentalLog> rentalList) {
 		System.out.println("\n====================================");
-		System.out.println("대여번호\t대여날짜\t도서명");
+		System.out.println("대여번호\t대여날짜\t\t도서명");
 		for (RentalLog rl : rentalList) {
 			System.out.println(rl.getrNo() + "\t" + rl.getRenDate() + "\t" + rl.getbName());
 		}
@@ -529,36 +529,36 @@ public class LibraryMenu {
 	
 	
 	public void displayRentalAllList(ArrayList<RentalLog> rentalList) {
-		System.out.println("\n====================================");
+		System.out.println("\n======================================");
 		System.out.println("대여번호\t대여날짜\t\t회원번호\t도서번호");
 		for (RentalLog rl : rentalList) {
 			System.out.println(rl.getrNo() + "\t" + rl.getRenDate() + "\t" + rl.getmNo()+ "\t" + rl.getbNo());
 		}
-		System.out.println("====================================");
+		System.out.println("======================================");
 
 	}
 	
 	
 	
 	public void displayList(ArrayList<Book> bookList) {
-		System.out.println("\n====================================");
+		System.out.println("\n========================================================================");
 		System.out.println("도서번호\t카테고리\t도서명\t\t\t저자\t\t출간일");
 		for (Book b : bookList) {
 			System.out.println(b.getbNo() + "\t" + b.getcName() + "\t" + String.format("%-15s", b.getbName()) + 
 								"\t" +  String.format("%-10s", b.getAuthor()) + "\t" +  b.getPublishdate());
 		}
-		System.out.println("====================================");
+		System.out.println("========================================================================");
 	}
 	
 	public void displayLongRentalList(ArrayList<RentalLog> rentalList) {
-		System.out.println("\n====================================");
+		System.out.println("\n========================================================================");
 		System.out.println("대여번호\t대여날짜\t\t도서명\t\t\t회원이름\t회원연락처");
 		for (RentalLog rl : rentalList) {
 			System.out.println(rl.getrNo() + "\t" + rl.getRenDate() + "\t" + 
 								String.format("%-15s", rl.getbName())+ "\t" +
 								rl.getmName() + "\t" + rl.getmPhone());
 		}
-		System.out.println("====================================");
+		System.out.println("========================================================================");
 	}
 	
 
